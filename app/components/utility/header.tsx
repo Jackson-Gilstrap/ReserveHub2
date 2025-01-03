@@ -1,14 +1,21 @@
 "use client";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 function AuthButton() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  console.log("client session", session)
+  //  const imgSrc = session?.user?.image
+
+  if(status === "loading") {
+    return "Loading..."
+  }
 
   if (session) {
     return (
       <>
-        {session?.user?.name} <br />
+        {/* <Image src={imgSrc} alt="User profile image"  /> */}
         <button onClick={() => signOut()}>SignOut</button>
       </>
     );

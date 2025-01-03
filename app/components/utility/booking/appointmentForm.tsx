@@ -40,8 +40,8 @@ export default function AppointmentForm() {
     const data = Object.fromEntries(newFormData.entries());
 
     const checkboxes = {
-      file_jointly: form_ref.current!.file_jointly.checked,
-      has_dependent: form_ref.current!.has_dependent.checked,
+      file_jointly: form_ref.current!.file_jointly.checked || false,
+      has_dependent: form_ref.current!.has_dependent.checked || false,
     };
 
     const final_data = { ...data, ...checkboxes };
