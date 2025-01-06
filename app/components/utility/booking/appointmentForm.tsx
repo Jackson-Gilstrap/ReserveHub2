@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo, useRef, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Appointment, getAppointments } from "@/app/lib/appointments";
 import { Location, getLocations } from "@/app/lib/locations";
+import { formattedISOnoTime, formatDate } from "../functions/datetime";
 
 export default function AppointmentForm() {
   const [date, setDate] = useState<string>("");
@@ -14,25 +15,9 @@ export default function AppointmentForm() {
   const form_ref = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
-  const formatDate = (date: string) => {
-    let tempArr = date.split("T");
-    return tempArr[0];
-  };
+ 
 
-  const  formattedISOnoTime = (dateString: string) => {
-    const date = new Date(`${dateString}T00:00:00`);
-
-    const day = date.toLocaleDateString("en-US", { weekday: "long" });
-    const fullDate = date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-
-    return `${day}, ${fullDate}`
-
-
-};
+  
   const handleSelection = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     console.log(selectedAppointment);

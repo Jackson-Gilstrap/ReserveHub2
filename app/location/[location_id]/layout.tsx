@@ -1,5 +1,3 @@
-import { LocationProvider } from "@/app/lib/context/locationContext";
-
 export default function LocationLayout({
   children,
   appointments,
@@ -12,12 +10,11 @@ export default function LocationLayout({
   return (
     <>
       {children}
-      <LocationProvider>
-        <div className="grid grid-cols-2 gap-4">
-          {appointments}
-          {reservations}
-        </div>
-      </LocationProvider>
+
+      <div className="grid grid-cols-2 gap-4">
+        {appointments}
+        {reservations}
+      </div>
     </>
   );
 }
