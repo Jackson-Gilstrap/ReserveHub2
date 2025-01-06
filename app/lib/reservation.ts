@@ -9,3 +9,18 @@ export interface Reservation {
   for_dependent: boolean;
   client_id: string;
 }
+
+export function getReservations () {
+  return fetch("http://localhost:8080/api/get-reservations").then((response: any) => {
+      if(!response.ok) {
+          throw new Error("Internal server error")
+      }
+
+      return response.json()
+  }).then(data => {
+      return data.body
+  }).catch(error => {
+      console.log(error.message);
+      return error
+  })
+}

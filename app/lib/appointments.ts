@@ -29,3 +29,23 @@ export function getAppointments() {
       return error
     });
 }
+
+
+export function getAppointmentsByLocation(location_id: string) {
+  //fetch from backend
+  return fetch(`http://localhost:8080/api/location/get-appointments/${location_id}`)
+    .then((response: any) => {
+      if (!response.ok) {
+        throw new Error("HTTP error");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data.body)
+      return data.body;
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error
+    });
+}
