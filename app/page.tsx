@@ -5,9 +5,9 @@ import { redirect } from "next/navigation";
 export default async function Home() {
 const session = await getServerSession(authOptions)
 console.log(session)
-// if(session) {
-//     redirect("/dashboard")
-// }
+if(session) {
+    redirect("/dashboard")
+}
   return (
     <>
       <div className="h-screen">

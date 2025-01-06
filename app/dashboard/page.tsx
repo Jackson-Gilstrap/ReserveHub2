@@ -1,18 +1,24 @@
-'use client';
-import { useEffect, useState } from "react";
-
-
-
-
+"use client";
+import NavButton from "../components/utility/button";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Dashboard = () => {
-  // const { data: session, status } = useSession(); // Google auth user
-  const [isLoading, setIsLoading] = useState(false); // Track loading state
-  const [hasFetched, setHasFetched] = useState(false); // Track fetch completion
+  const { data: session, status } = useSession(); // Google auth user will evntually check emails against a db to see roles
 
+  if(!session) {
+    redirect("/")
+  }
+
+  
   return (
     <>
-      <h1>Admin Dashboard</h1>
+      <div className=" px-4 py-6 mt-8 mx-6">
+        <h2 className="text-xl font-semibold text-[#212529] text-center">
+          Admin Dashboard
+        </h2>
+        <NavButton url="booking" text="Create reservation" disabled={false} />
+      </div>
     </>
   );
 };

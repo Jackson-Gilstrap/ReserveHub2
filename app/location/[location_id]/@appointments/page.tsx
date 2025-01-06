@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { formatDate } from "@/app/components/utility/functions/datetime";
 
+
 interface fetchedDataProps {
   appointments: [];
   reservations: [];
@@ -21,6 +22,7 @@ export default function AppointmentsbyLocation() {
   const pathname = usePathname();
   const parts = pathname.split("/");
   const location_id = parts[parts.length - 1];
+  
 
   const handleClick = (e: any) => {
     console.log(e);
@@ -53,7 +55,7 @@ export default function AppointmentsbyLocation() {
       });
 
     //
-  }, [location]);
+  }, []);
 
   return (
     <section className="bg-[#FDFDFD] p-6 max-w-2xl mx-auto border border-[#E0E0E0] rounded-lg shadow-md mt-8">
