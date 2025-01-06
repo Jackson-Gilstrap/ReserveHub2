@@ -9,6 +9,7 @@ export default function AppointmentForm() {
   const [locations, setLocations] = useState<Location[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment>();
+  const [error, setError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false);
   const form_ref = useRef<HTMLFormElement>(null);
   const router = useRouter();
@@ -18,15 +19,30 @@ export default function AppointmentForm() {
     return tempArr[0];
   };
 
+  const  formattedISOnoTime = (dateString: string) => {
+    const date = new Date(`${dateString}T00:00:00`);
+
+    const day = date.toLocaleDateString("en-US", { weekday: "long" });
+    const fullDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+
+    return `${day}, ${fullDate}`
+
+
+};
   const handleSelection = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     console.log(selectedAppointment);
   };
 
   const filteredAppointments = useMemo(() => {
+    console.log(formattedISOnoTime(date))
     return appointments
       .filter((appointment) =>
-        date ? formatDate(appointment.app_date) === date : true
+        date ? formatDate(appointment.app_date) === formattedISOnoTime(date) : true
       )
       .filter((appointment) =>
         location ? appointment.app_location === location : true
@@ -35,9 +51,16 @@ export default function AppointmentForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
+    
 
     const newFormData = new FormData(form_ref.current!);
     const data = Object.fromEntries(newFormData.entries());
+
+    if(!data) {
+      setError("Please enter all required information information.")
+      return
+    }
 
     const checkboxes = {
       file_jointly: form_ref.current!.file_jointly.checked || false,
@@ -81,6 +104,7 @@ export default function AppointmentForm() {
     getAppointments()
       .then((fetchedAppointments) => {
         if (Array.isArray(fetchedAppointments)) {
+          console.log(fetchedAppointments)
           setAppointments(fetchedAppointments);
         } else {
           console.error("Invalid appointments data:", fetchedAppointments);
@@ -226,6 +250,7 @@ export default function AppointmentForm() {
               name="f_name"
               id="f_name"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              required
             />
 
             <label htmlFor="l_name" className="text-[#212529]">
@@ -236,6 +261,7 @@ export default function AppointmentForm() {
               name="l_name"
               id="l_name"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              required
             />
 
             <label htmlFor="phone_number" className="text-[#212529]">
@@ -247,6 +273,7 @@ export default function AppointmentForm() {
               id="phone_number"
               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              required
             />
 
             <label htmlFor="zipcode" className="text-[#212529]">
@@ -257,6 +284,7 @@ export default function AppointmentForm() {
               name="zipcode"
               id="zipcode"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              required
             />
           </div>
         </section>
@@ -294,10 +322,10 @@ export default function AppointmentForm() {
         {/* Submit Button */}
         <div className="mt-8">
           <button
-            disabled={filteredAppointments.length === 0}
+            disabled={!selectedAppointment?.app_id} 
             type="submit"
             className={`px-6 py-3 font-semibold rounded-md transition-all ${
-              filteredAppointments.length === 0
+              !selectedAppointment?.app_id
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-[#4A90E2] text-white hover:bg-[#357ABD]"
             }`}
@@ -309,3 +337,5 @@ export default function AppointmentForm() {
     </>
   );
 }
+
+
