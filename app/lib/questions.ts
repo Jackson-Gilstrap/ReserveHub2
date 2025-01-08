@@ -6,7 +6,7 @@ type Question = {
 export const questions: Question[] = [
     {
         id: 1,
-        question: "Is your income less than $79,000 per year?"
+        question: "Is your income less than $84,000 per year?"
     },
     {
         id: 2,
@@ -24,8 +24,5 @@ export const questions: Question[] = [
         id:5,
         question: "Do you have international status?"
     },
-    {
-        id:6,
-        question: "Are you a Hartwick employee?"
-    },
+    
 ]

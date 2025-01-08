@@ -3,7 +3,6 @@ import NavButton from "@/app/components/utility/button";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
 interface ReservationProps {
   booking_ref: string;
   res_date: string;
@@ -16,52 +15,57 @@ interface ReservationProps {
 }
 const ConfirmationPage = () => {
   const params = useParams() as { bookingRef: string };
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [checkedBox, setCheckedBox]=useState<boolean>(false)
   const [reservationDetails, setReservationDetails] =
     useState<ReservationProps>();
   const { bookingRef } = params;
 
-  const  handleClick = async() => {
-    const html2pdf = await require("html2pdf.js")
-    const element = document.getElementById("confirmation")
-    html2pdf(element,{
-        margin: 20,
-        filename: `VITA Reservation Confirmation ${bookingRef} ${reservationDetails?.created_at}`
-    })
-  }
+  const generatePdf = async () => {
+    const html2pdf = await require("html2pdf.js");
+    const element = document.getElementById("confirmation");
+    html2pdf(element, {
+      margin: 20,
+      filename: `VITA Reservation Confirmation ${bookingRef} ${reservationDetails?.created_at}`,
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(()=> {
-        if (bookingRef) {
-            fetch(`http://localhost:8080/api/get-reservation/${bookingRef}`)
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error("Internal server error");
-                }
-      
-                return response.json();
-              })
-              .then((data) => {
-                console.log("Reservation Confirmation: ", data.body);
-                setReservationDetails(data.body);
-                setLoading(false);
-              })
-              .catch((error) => {
-                console.log(error.message);
-              });}
-    },2000)
-    
-    
+    setTimeout(() => {
+      if (bookingRef) {
+        fetch(`http://localhost:8080/api/get-reservation/${bookingRef}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Internal server error");
+            }
+
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Reservation Confirmation: ", data.body);
+            setReservationDetails(data.body);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    }, 2000);
   }, [bookingRef]);
   return (
     <>
       {loading ? (
         <div className="ml-10">
-          <h3 className="text-xl font-semibold text-[#212529]">Loading Confirmation details...</h3>
+          <h3 className="text-xl font-semibold text-[#212529]">
+            Loading Confirmation details...
+          </h3>
         </div>
       ) : (
-        <div className="max-w-md mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow-lg" id="confirmation">
+        <div
+          className="max-w-md mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow-lg"
+          id="confirmation"
+        >
           <h2 className="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4 text-center">
             Reservation Confirmation
           </h2>
@@ -94,25 +98,63 @@ const ConfirmationPage = () => {
             </p>
             <p>
               <span className="font-medium text-gray-600">File Jointly:</span>{" "}
-              {reservationDetails?.file_jointly ?  "Yes" : "No"}
+              {reservationDetails?.file_jointly ? "Yes" : "No"}
             </p>
             <p>
               <span className="font-medium text-gray-600">For Dependent:</span>{" "}
-              {reservationDetails?.for_dependent ?  "Yes" : "No"}
+              {reservationDetails?.for_dependent ? "Yes" : "No"}
             </p>
           </div>
           <div className="mt-8">
-            <p>Any questions regarding your reservation call <br/><strong>607-431-4338</strong></p> 
+            <p>
+              Any questions regarding your reservation call <br />
+              <strong>607-431-4338</strong>
+            </p>
           </div>
-          <div className= "mt-8" data-html2canvas-ignore>
-            <p className="font-bold">It is highly recommended to download and save a copy of your reservation</p>
-          <button onClick={handleClick} className="bg-black text-white px-4 py-2 border-white border-2 mt-8 cursor-pointer" >
-            Download Confirmation
-          </button>
+          <div className="mt-8" data-html2canvas-ignore>
+            <p className="font-bold">
+              It is highly recommended to download and save a copy of your
+              reservation
+            </p>
+            <button
+              onClick={generatePdf}
+              className="bg-black text-white px-4 py-2 border-white border-2 mt-8 cursor-pointer"
+            >
+              Download Confirmation
+            </button>
           </div>
         </div>
       )}
-      <NavButton url="/" text="Finish" disabled={false} />
+      <section className="bg-[#FDFDFD] border border-[#E0E0E0] rounded-lg mt-4 p-6 shadow-md max-w-3xl mx-auto">
+        <h3 className="text-[#212529] text-2xl font-semibold mb-4">
+          <strong>Important Information</strong>
+        </h3>
+        <ol className="list-decimal list-inside text-[#212529] space-y-2">
+          <li>Bring your Identity Protection Pin &#40;IP Pin&#41;</li>
+          <li>
+            If you have ObamaCare/Affordable Care Act &#40;ACA&#41; or Medicare.{" "}
+            <strong className="text-[#4A90E2]">Bring form 1095-a</strong>
+          </li>
+          <li>We will call you to remind you of your appointment</li>
+        </ol>
+        <div className="flex items-center mt-6">
+          <input
+            type="checkbox"
+            onChange={(e)=> setCheckedBox(e.target.checked)}
+            name="client-understands"
+            id="client-understands"
+            className="w-5 h-5 border border-[#E0E0E0] rounded-sm focus:ring-[#4A90E2] focus:ring-2"
+          />
+          <label
+            htmlFor="client-understands"
+            className="ml-2 text-[#212529] text-sm font-medium"
+          >
+            I understand the above
+          </label>
+        </div>
+      </section>
+
+      <NavButton url="/" text="Finish" disabled={!checkedBox} />
     </>
   );
 };

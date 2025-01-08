@@ -6,7 +6,7 @@ const Locations = () => {
     <>
       <section className="flex flex-col bg-[#FDFDFD] p-6 rounded-lg border border-[#E0E0E0] shadow-md max-w-2xl mx-auto">
         <div className="flex flex-col justify-between items-center p-4 mx-auto">
-          <NavButton url="#" text="Create" disabled={true} />
+          <NavButton url="create-location" text="Create" disabled={false} />
           <h3 className="text-[#212529] text-2xl font-semibold my-2">
             Locations
           </h3>

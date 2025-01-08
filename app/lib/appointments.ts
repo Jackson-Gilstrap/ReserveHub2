@@ -4,7 +4,7 @@ export type Appointment = {
   app_date: string;
   app_time: string;
   app_type: string;
-  app_location: string
+  app_location: string;
   app_status: number;
   cur_slot: number;
   max_slot: number;

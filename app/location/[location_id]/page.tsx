@@ -29,12 +29,12 @@ const LocationPage = () => {
   return (
     <>
       <NavButton url="dashboard" text="Dashboard" disabled={false} />
-      <section className="bg-[#FDFDFD] border border-[#E0E0E0] rounded-lg p-6 shadow-md max-w-lg mx-auto">
+      <section className="bg-[#FDFDFD] border border-[#E0E0E0] rounded-lg p-6  mt-4 shadow-md max-w-2xl mx-auto">
         <div className="flex flex-row justify-between items-center p-4 mx-auto">
           <h3 className="text-[#212529] text-2xl font-semibold mb-4">
             {location?.location_name}
           </h3>
-          <NavButton url="#" text="Edit" disabled={true} />
+          <NavButton url={`edit-location/${location_id}`} text="Edit" disabled={false} />
         </div>
         <p className="text-[#6C757D] text-lg font-medium mb-2">
           Location details
@@ -54,13 +54,10 @@ const LocationPage = () => {
               <span className="font-medium">{location?.location_zipcode}</span>
             </p>
           </div>
-          <div>
-            <h4>Weekdays: </h4>
-
-            {location?.weekdays.map((day, index) => (
-              <span key={index}>{day} </span>
-            ))}
-          </div>
+          
+        </div>
+        <div>
+          <NavButton url={`${location?.location_name}/create-appointment`} text="Create Appointment" disabled={false}/>
         </div>
       </section>
     </>
