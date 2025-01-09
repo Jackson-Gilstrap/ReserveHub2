@@ -235,6 +235,8 @@ export default function AppointmentForm() {
               name="f_name"
               id="f_name"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              minLength={2}
+              maxLength={255}
               required
             />
 
@@ -246,6 +248,8 @@ export default function AppointmentForm() {
               name="l_name"
               id="l_name"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              minLength={2}
+              maxLength={255}
               required
             />
 
@@ -258,6 +262,7 @@ export default function AppointmentForm() {
               id="phone_number"
               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              placeholder="i.e. 111-111-111"
               required
             />
 
@@ -269,6 +274,8 @@ export default function AppointmentForm() {
               name="zipcode"
               id="zipcode"
               className="px-3 py-2 bg-[#FFFFFF] border-2 border-[#E0E0E0] rounded-md focus:border-[#4A90E2] focus:outline-none"
+              maxLength={5}
+              minLength={5}
               required
             />
           </div>

@@ -30,7 +30,7 @@ export default function LocationList () {
     return (
         <section className=" p-6 max-w-2xl mx-auto">
             <span>Number of locations: {count}</span>
-            <ul className="list-none p-0 m-0">
+            <ul className="list-none p-0 m-0 grid grid-cols-3 gap-2">
                 {locations.map(location => (
                     <li  id={`${location.location_id}`} key={location.location_id} onClick={handleClick} className="bg-[#F8F9FA] text-[#212529] p-3 mb-3 rounded-md border border-[#E0E0E0] cursor-pointer transition duration-300 hover:bg-[#4A90E2] hover:text-white active:bg-[#357ABD] active:scale-95">{location.location_name}</li>
                 ))}
