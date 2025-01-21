@@ -10,7 +10,7 @@ export const questions: Question[] = [
     },
     {
         id: 2,
-        question: "Are you over the age of 65?"
+        question: "Are you over the age of 60?"
     },
     {
         id:3,

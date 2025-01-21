@@ -49,7 +49,6 @@ export default function DailyReports() {
     }
   };
 
-  const currentDate = new Date();
 
   useEffect(() => {
     if (date) {
@@ -174,20 +173,24 @@ export default function DailyReports() {
                   ></div>{" "}
                 </td>
                 <td className="p-4 border-b border-[#E0E0E0]">
-                  <select className="w-full px-3 py-2 border border-[#E0E0E0] rounded-md bg-[#FFFFFF] focus:border-[#4A90E2] focus:ring-[#4A90E2] focus:ring-1 focus:outline-none text-sm">
-                    <option value="Jackson">Jackson</option>
-                    <option value="Jackson">Jackson</option>
-                    <option value="Jackson">Jackson</option>
-                  </select>
+                  <div
+                    contentEditable={true}
+                    className="textarea-like whitespace-pre-wrap break-words w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1"
+                  ></div>{" "}
                 </td>
                 <td className="p-4 border-b border-[#E0E0E0]">
-                  <select className="w-full px-3 py-2 border border-[#E0E0E0] rounded-md bg-[#FFFFFF] focus:border-[#4A90E2] focus:ring-[#4A90E2] focus:ring-1 focus:outline-none text-sm">
-                    <option value="Gilstrap">Gilstrap</option>
-                    <option value="Gilstrap">Gilstrap</option>
-                    <option value="Gilstrap">Gilstrap</option>
-                  </select>
+                  <div
+                    contentEditable={true}
+                    className="textarea-like whitespace-pre-wrap break-words w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1"
+                  ></div>{" "}
                 </td>
-                <td className="p-4 border-b border-[#E0E0E0]">File?</td>
+                <td className="p-4 border-b border-[#E0E0E0]">
+                  <div
+                    contentEditable={true}
+                    className="textarea-like whitespace-pre-wrap break-words w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1"
+                  ></div>{" "}
+                </td>
+            
               </tr>
             ))}
           </tbody>

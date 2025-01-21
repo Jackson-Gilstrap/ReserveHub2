@@ -1,19 +1,19 @@
 export default function LocationLayout({
   children,
   appointments,
-  reservations,
+  // reservations,
 }: {
   children: React.ReactNode;
   appointments: React.ReactNode;
-  reservations: React.ReactNode;
+  // reservations: React.ReactNode;
 }) {
   return (
     <>
       {children}
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 mx-auto">
         {appointments}
-        {reservations}
+        {/* {reservations} */}
       </div>
     </>
   );

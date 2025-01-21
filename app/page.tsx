@@ -6,6 +6,7 @@ export default async function Home() {
 const session = await getServerSession(authOptions)
 console.log(session)
 if(session) {
+  // check the email exists in our lookup table
     redirect("/dashboard")
 }
   return (

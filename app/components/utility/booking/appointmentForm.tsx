@@ -50,6 +50,7 @@ export default function AppointmentForm() {
     const checkboxes = {
       file_jointly: form_ref.current!.file_jointly.checked || false,
       has_dependent: form_ref.current!.has_dependent.checked || false,
+      is_tce: form_ref.current!.is_tce.checked || false,
     };
 
     const final_data = { ...data, ...checkboxes };
@@ -305,6 +306,17 @@ export default function AppointmentForm() {
                 type="checkbox"
                 name="has_dependent"
                 id="has_dependent"
+                className="ml-2"
+              />
+            </div>
+            <div>
+              <label htmlFor="is_tce" className="text-[#212529]">
+                Are you 60 yrs old as of December 31st 2024?
+              </label>
+              <input
+                type="checkbox"
+                name="is_tce"
+                id="is_tce"
                 className="ml-2"
               />
             </div>

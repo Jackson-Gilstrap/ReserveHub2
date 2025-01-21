@@ -18,6 +18,12 @@ export interface ModifiedReservation {
   client_phone_number: string;
 }
 
+export interface DesciptiveReservation extends ModifiedReservation {
+  file_jointly: boolean;
+  for_dependent: boolean;
+  is_tce: boolean;
+}
+
 export function getReservations() {
   return fetch("http://localhost:8080/api/get-reservations")
     .then((response: any) => {
@@ -38,6 +44,23 @@ export function getReservations() {
 
 export function getReservationByDate(date: string) {
   return fetch(`http://localhost:8080/api/reservations/get-reservations/${date}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Internal Server Error");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      return data.body;
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+export function getReservationByAppId(id: number) {
+  return fetch(`http://localhost:8080/api/reservations-2/get-reservations/${id}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Internal Server Error");

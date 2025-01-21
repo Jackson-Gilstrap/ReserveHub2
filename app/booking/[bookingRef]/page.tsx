@@ -130,7 +130,7 @@ const ConfirmationPage = () => {
           <strong>Important Information</strong>
         </h3>
         <ol className="list-decimal list-inside text-[#212529] space-y-2">
-          <li>Bring your Identity Protection Pin &#40;IP Pin&#41;</li>
+          <li>Bring your Identity Protection Pin &#40;IP Pin&#41; if you have it</li>
           <li>
             If you have ObamaCare/Affordable Care Act &#40;ACA&#41; or Medicare.{" "}
             <strong className="text-[#4A90E2]">Bring form 1095-a</strong>
