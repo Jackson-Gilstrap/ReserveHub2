@@ -1,3 +1,5 @@
+
+import { RoleProvider } from "@/app/lib/context/roleContext";
 export default function LocationLayout({
   children,
   appointments,
@@ -9,12 +11,15 @@ export default function LocationLayout({
 }) {
   return (
     <>
+    <RoleProvider>
       {children}
 
       <div className="grid grid-cols-1 gap-4 mx-auto">
         {appointments}
         {/* {reservations} */}
       </div>
+
+    </RoleProvider>
     </>
   );
 }

@@ -1,14 +1,19 @@
+"use client";
 import NavButton from "./components/utility/button";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
-export default async function Home() {
-const session = await getServerSession(authOptions)
-console.log(session)
-if(session) {
-  // check the email exists in our lookup table
-    redirect("/dashboard")
-}
+// import { authOptions } from "./api/auth/[...nextauth]/route";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session && status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [session]);
+
   return (
     <>
       <div className="h-screen">
@@ -20,7 +25,7 @@ if(session) {
         <h2 className="text-center text-2xl mt-8">
           Begin Your Reservation Proccess Below
         </h2>
-        <NavButton url="booking" text="Start" disabled={false}/>
+        <NavButton url="booking" text="Start" disabled={false} />
       </div>
     </>
   );

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Navbar from "./components/utility/header";
 import SessionProvider from "./components/utility/SessionProvider";
+import { RoleProvider } from "./lib/context/roleContext";
 import { getServerSession } from "next-auth";
 import "./globals.css";
-
 
 export const metadata: Metadata = {
   title: "Reserve Hub v2",
@@ -20,8 +20,10 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <SessionProvider session={session}>
-          <Navbar />
-          <main>{children}</main>
+          <RoleProvider>
+            <Navbar />
+            <main>{children}</main>
+          </RoleProvider>
         </SessionProvider>
       </body>
     </html>

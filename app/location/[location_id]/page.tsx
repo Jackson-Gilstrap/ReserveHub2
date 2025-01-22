@@ -5,12 +5,14 @@ import { usePathname } from "next/navigation";
 import NavButton from "@/app/components/utility/button";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { useRole } from "@/app/lib/context/roleContext";
 const LocationPage = () => {
   const [location, setLocation] = useState<Location>();
   const pathname = usePathname();
   const parts = pathname.split("/");
   const location_id = parts[parts.length - 1];
   const { data: session, status } = useSession(); // Google auth user will evntually check emails against a db to see roles
+  const {role} = useRole()
 
   if(!session) {
     redirect("/")
@@ -34,7 +36,7 @@ const LocationPage = () => {
           <h3 className="text-[#212529] text-2xl font-semibold mb-4">
             {location?.location_name}
           </h3>
-          <NavButton url={`edit-location/${location_id}`} text="Edit" disabled={false} />
+          <NavButton url={`edit-location/${location_id}`} text="Edit" disabled={role != 'admin'} />
         </div>
         <p className="text-[#6C757D] text-lg font-medium mb-2">
           Location details
@@ -57,7 +59,7 @@ const LocationPage = () => {
           
         </div>
         <div>
-          <NavButton url={`${location?.location_name}/create-appointment`} text="Create Appointment" disabled={false}/>
+          <NavButton url={`${location?.location_name}/create-appointment`} text="Create Appointment" disabled={role != 'admin'}/>
         </div>
       </section>
     </>
