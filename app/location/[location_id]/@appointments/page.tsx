@@ -108,7 +108,7 @@ export default function AppointmentsbyLocation() {
             <li
               id={`${appointment.app_id}`}
               key={appointment.app_id}
-              onClick={(e) => handleClick(appointment.app_id)}
+              onClick={() => handleClick(appointment.app_id)}
               className="bg-[#F8F9FA] text-[#212529] p-3 rounded-md border border-[#E0E0E0] cursor-pointer transition duration-300 hover:bg-[#4A90E2] hover:text-white active:bg-[#357ABD] active:scale-95"
             >
               <span className="font-semibold">{appointment.app_title}</span>

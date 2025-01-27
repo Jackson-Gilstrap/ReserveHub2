@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Navbar from "./components/utility/header";
 import SessionProvider from "./components/utility/SessionProvider";
 import { RoleProvider } from "./lib/context/roleContext";

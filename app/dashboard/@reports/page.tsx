@@ -5,7 +5,7 @@ import {
   ModifiedReservation,
   getReservationByDate,
 } from "@/app/lib/reservation";
-//@ts-ignore
+//@ts-expect-error
 import html2pdf from 'html2pdf.js'
 
 export default function DailyReports() {

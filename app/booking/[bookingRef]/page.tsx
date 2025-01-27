@@ -2,7 +2,7 @@
 import NavButton from "@/app/components/utility/button";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-//@ts-ignore
+//@ts-expect-error
 import html2pdf from 'html2pdf.js';
 interface ReservationProps {
   booking_ref: string;

@@ -74,8 +74,8 @@ export default function AppointmentForm() {
         
         router.push(`/booking/${result.booking_ref}`);
       }, 3000);
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      console.log(error);
       
     }
   };
