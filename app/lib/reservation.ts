@@ -6,6 +6,7 @@ export interface Reservation {
   booking_ref: string;
   file_jointly: boolean;
   for_dependent: boolean;
+  is_tce:boolean;
   client_id: string;
 }
 
@@ -24,8 +25,37 @@ export interface DesciptiveReservation extends ModifiedReservation {
   is_tce: boolean;
 }
 
+
+export function getReservation(bookingRef: string) {
+  return fetch(`http://localhost:8080/api/reservations/read/bookingRef/${bookingRef}`).then(response => {
+    if (!response.ok) {
+      throw new Error("Internal Server Error");
+    }
+
+    return response.json();
+  }).then(data => {
+    return data.body
+  }).catch(error => {
+    console.log(error);
+    return error
+  })
+}
+
+export function deleteReservation(bookingRef: string) {
+  return fetch(`http://localhost:8080/api/reservations/delete/${bookingRef}`).then(response => {
+    if (!response.ok) {
+      throw new Error("Internal Server Error");
+    }
+    return response.json()
+  }).then(data => {
+    return data.body
+  }).catch(error=> {
+    console.log(error);
+    return error
+  })
+}
 export function getReservations() {
-  return fetch("http://localhost:8080/api/get-reservations")
+  return fetch("http://localhost:8080/api/reservations/read")
     .then((response: any) => {
       if (!response.ok) {
         throw new Error("Internal server error");
@@ -43,7 +73,7 @@ export function getReservations() {
 }
 
 export function getReservationByDate(date: string) {
-  return fetch(`http://localhost:8080/api/reservations/get-reservations/${date}`)
+  return fetch(`http://localhost:8080/api/reservations/read/date/${date}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Internal Server Error");
@@ -60,7 +90,7 @@ export function getReservationByDate(date: string) {
     });
 }
 export function getReservationByAppId(id: number) {
-  return fetch(`http://localhost:8080/api/reservations-2/get-reservations/${id}`)
+  return fetch(`http://localhost:8080/api/reservations/read/id/${id}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Internal Server Error");

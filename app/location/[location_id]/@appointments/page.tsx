@@ -23,6 +23,7 @@ export default function AppointmentsbyLocation() {
   const pathname = usePathname();
   const parts = pathname.split("/");
   const location_id = parts[parts.length - 1];
+  console.log(location_id)
 
   // Filter appointments based on selected date
   const filteredAppointments = useMemo(() => {
@@ -66,6 +67,7 @@ export default function AppointmentsbyLocation() {
   };
 
   useEffect(() => {
+    console.log("useeffect: ",location_id)
     getAppointmentsByLocation(location_id)
       .then((fetchedData: fetchedDataProps) => {
         if (Array.isArray(fetchedData.appointments)) {

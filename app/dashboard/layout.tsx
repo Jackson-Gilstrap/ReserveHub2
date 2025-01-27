@@ -15,10 +15,13 @@ export default function Layout( {
         <>
         <RoleProvider>
         {children}
+        <div className="mb-8">
+
+        {reports}
+        </div>
         <div className="grid grid-cols-2 gap-4">
         {locations}
-        {reports}
-        {/* {reservations} */}
+        {reservations}
 
         </div>
 

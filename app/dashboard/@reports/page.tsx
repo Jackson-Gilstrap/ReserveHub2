@@ -8,7 +8,6 @@ import {
 
 export default function DailyReports() {
   const [reservations, setReservations] = useState<ModifiedReservation[]>([]);
-  const [reservation_location, setReservationLocation] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 7;

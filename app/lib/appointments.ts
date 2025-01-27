@@ -14,7 +14,7 @@ export type Appointment = {
 
 export function getAppointments() {
   //fetch from backend
-  return fetch("http://localhost:8080/api/get-appointments")
+  return fetch("http://localhost:8080/api/appointments/read")
     .then((response: any) => {
       if (!response.ok) {
         throw new Error("HTTP error");
@@ -32,8 +32,9 @@ export function getAppointments() {
 
 
 export function getAppointmentsByLocation(location_id: string) {
+  console.log("in the function: ", location_id)
   //fetch from backend
-  return fetch(`http://localhost:8080/api/location/get-appointments/${location_id}`)
+  return fetch(`http://localhost:8080/api/appointments/read/location/${location_id}`)
     .then((response: any) => {
       if (!response.ok) {
         throw new Error("HTTP error");

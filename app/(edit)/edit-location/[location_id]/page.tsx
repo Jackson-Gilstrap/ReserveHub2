@@ -1,14 +1,16 @@
 "use client";
 import { usePathname, redirect } from "next/navigation";
 import { useState, useEffect, useRef, FormEvent } from "react";
-import { Location, getLocation } from "@/app/lib/locations";
+import { Location, getLocation, deleteLocation } from "@/app/lib/locations";
 import { useSession } from "next-auth/react";
+import { useRole } from "@/app/lib/context/roleContext";
 
 export default function EditLocation() {
   const pathname = usePathname();
   const form_ref = useRef<HTMLFormElement>(null);
   const { data: session, status } = useSession(); // Google auth user will evntually check emails against a db to see roles
   const [location, setLocation] = useState<Location>();
+  const {role} = useRole()
 
   const parts = pathname.split("/");
   const location_id = parts[parts.length - 1];
@@ -18,8 +20,12 @@ export default function EditLocation() {
     e.preventDefault();
     const formdata = new FormData(form_ref.current!);
     const data = Object.fromEntries(formdata.entries());
-    console.log(data)
+    console.log(data);
   };
+
+  const handleDelete = () => {
+          deleteLocation(location_id)
+      }
 
   if (!session) {
     redirect("/");
@@ -116,6 +122,7 @@ export default function EditLocation() {
         id="location_zipcode"
         className="w-full px-3 py-2 border-2 border-[#E0E0E0] bg-[#FFFFFF] text-[#212529] rounded-md focus:border-[#4A90E2] focus:ring-[#4A90E2] focus:ring-1 focus:outline-none"
       />
+      <div className="border-t border-[#E0E0E0] mt-6 pt-4 flex flex-row gap-4">
 
       <button
         type="submit"
@@ -123,6 +130,15 @@ export default function EditLocation() {
       >
         Save
       </button>
+      <button
+        type="button"
+        onClick={handleDelete}
+        disabled = {role != "admin"}
+        className="px-6 py-3 mt-4 font-semibold rounded-md bg-red-500 text-white hover:bg-red-300 transition duration-300"
+        >
+        delete{" "}
+      </button>
+      </div>
     </form>
   );
 }

@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const {role} = useRole()
-  const {data: session} = useSession()
+  const {data: session, status} = useSession()
 
   if(!session) {
     redirect("/")
@@ -24,8 +24,7 @@ const Dashboard = () => {
         <h2 className="text-xl font-semibold text-[#212529] text-center">
           Admin Dashboard
         </h2>
-        <h3>{role}</h3>
-        <NavButton url="booking" text="Create reservation" disabled={false} />
+        <NavButton url="booking" text="Create reservation" disabled={status != "authenticated"} />
       </div>
     </>
   );

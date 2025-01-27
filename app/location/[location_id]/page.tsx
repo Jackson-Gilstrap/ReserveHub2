@@ -30,18 +30,21 @@ const LocationPage = () => {
   }, []);
   return (
     <>
-      <NavButton url="dashboard" text="Dashboard" disabled={false} />
-      <section className="bg-[#FDFDFD] border border-[#E0E0E0] rounded-lg p-6  mt-4 shadow-md max-w-2xl mx-auto">
-        <div className="flex flex-row justify-between items-center p-4 mx-auto">
-          <h3 className="text-[#212529] text-2xl font-semibold mb-4">
+      <NavButton
+        url="dashboard"
+        text="Dashboard"
+        disabled={false}
+      />
+      <section className="bg-[#FDFDFD] border border-[#E0E0E0] rounded-lg p-6 mt-4 shadow-md max-w-2xl mx-auto">
+        <div className="text-center mb-6">
+          <h3 className="text-[#212529] text-2xl font-semibold">
             {location?.location_name}
           </h3>
-          <NavButton url={`edit-location/${location_id}`} text="Edit" disabled={role != 'admin'} />
         </div>
-        <p className="text-[#6C757D] text-lg font-medium mb-2">
-          Location details
+  
+        <p className="text-[#6C757D] text-lg font-medium mb-4">
+          Location Details
         </p>
-
         <div className="grid grid-cols-2 gap-4">
           <div className="text-[#212529] space-y-2">
             <span>Address: </span>
@@ -56,14 +59,24 @@ const LocationPage = () => {
               <span className="font-medium">{location?.location_zipcode}</span>
             </p>
           </div>
-          
         </div>
-        <div>
-          <NavButton url={`${location?.location_name}/create-appointment`} text="Create Appointment" disabled={role != 'admin'}/>
+  
+        <div className="border-t border-[#E0E0E0] mt-6 pt-4 flex flex-row gap-4">
+          <NavButton
+            url={`edit-location/${location_id}`}
+            text="Edit"
+            disabled={role != 'admin'}
+          />
+          <NavButton
+            url={`${location?.location_name}/create-appointment`}
+            text="Create Appointment"
+            disabled={role != 'admin'}
+          />
         </div>
       </section>
     </>
   );
+  
 };
 
 export default LocationPage;
