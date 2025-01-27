@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 export default function CreateAppointment () {
     const form_ref = useRef<HTMLFormElement>(null);
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const pathname = usePathname();
     const parts = pathname.split("/");
     const newparts = parts[1].split("%20")
@@ -18,8 +18,8 @@ export default function CreateAppointment () {
         const formdata = new FormData(form_ref.current!);
         const data = Object.fromEntries(formdata.entries());
         console.log(data)
-    
-        if(status ==='authenticated') {
+
+        if(!session) {
             //submit data to db and then redirect
            const response = await fetch(`http://localhost:8080/api/create-appointment`, {
             method: "POST",
