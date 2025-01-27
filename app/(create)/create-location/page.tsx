@@ -17,7 +17,7 @@ export default function CreateLocation() {
   
       if(status ==='authenticated') {
           //submit data to db and then redirect
-         const response = await fetch(`http://localhost:8080/api/create-location`, {
+         const response = await fetch(`http://localhost:8080/api/locations/create`, {
           method: "POST",
             headers: {
               "Content-Type": "application/json",
