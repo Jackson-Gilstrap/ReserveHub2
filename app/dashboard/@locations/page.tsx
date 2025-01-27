@@ -1,3 +1,4 @@
+'use client'
 import LocationList from "@/app/components/utility/dashboard/locationsList";
 import NavButton from "@/app/components/utility/button";
 import { useRole } from "@/app/lib/context/roleContext";
