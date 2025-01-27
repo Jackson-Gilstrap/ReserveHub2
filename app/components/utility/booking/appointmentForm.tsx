@@ -54,7 +54,7 @@ export default function AppointmentForm() {
     try {
       
       const response = await fetch(
-        "http://localhost:8080/api/create-reservation",
+        "http://localhost:8080/api/reservations/create",
         {
           method: "POST",
           headers: {
