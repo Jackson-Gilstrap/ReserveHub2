@@ -2,7 +2,7 @@
 import NavButton from "@/app/components/utility/button";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-//@ts-expect-error
+//@ts-expect-error this error is because html2pdf doesn't have type file modules
 import html2pdf from 'html2pdf.js';
 interface ReservationProps {
   booking_ref: string;

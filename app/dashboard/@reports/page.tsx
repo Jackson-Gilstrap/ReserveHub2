@@ -5,7 +5,7 @@ import {
   ModifiedReservation,
   getReservationByDate,
 } from "@/app/lib/reservation";
-//@ts-expect-error
+//@ts-expect-error this error is because html2pdf doesn't have type file modules
 import html2pdf from 'html2pdf.js'
 
 export default function DailyReports() {
