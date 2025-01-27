@@ -14,6 +14,6 @@ export const formattedISOnoTime = (dateString: string) => {
 };
 
 export const formatDate = (date: string) => {
-    let tempArr = date.split("T");
+    const tempArr = date.split("T");
     return tempArr[0];
   };

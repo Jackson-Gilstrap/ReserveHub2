@@ -10,7 +10,7 @@ interface fetchedDataProps {
   reservations:[]
 }
 
-export default function reservationsbyLocation() {
+const ReservationsByLocation = () => {
   const [reservations, setreservations] = useState<Reservation[]>([]);
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -22,6 +22,7 @@ export default function reservationsbyLocation() {
   const parts = pathname.split("/");
   const location_id = parts[parts.length - 1];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = (e: any) => {
     console.log(e);
   };
@@ -53,7 +54,7 @@ export default function reservationsbyLocation() {
       });
 
     //
-  }, [location]);
+  }, [location_id]);
 
   return (
     <section className="bg-[#FDFDFD] p-6 max-w-2xl mx-auto border border-[#E0E0E0] rounded-lg shadow-md mt-8">
@@ -97,3 +98,6 @@ export default function reservationsbyLocation() {
   
   );
 }
+
+
+export default ReservationsByLocation

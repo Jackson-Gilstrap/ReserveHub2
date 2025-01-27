@@ -5,6 +5,8 @@ import {
   ModifiedReservation,
   getReservationByDate,
 } from "@/app/lib/reservation";
+//@ts-ignore
+import html2pdf from 'html2pdf.js'
 
 export default function DailyReports() {
   const [reservations, setReservations] = useState<ModifiedReservation[]>([]);
@@ -17,7 +19,7 @@ export default function DailyReports() {
   const pdfWidth = 297; // A4 width in mm (landscape: 297)
   const pdfHeight = 297;
   const generatePdf = async () => {
-    const html2pdf = await require("html2pdf.js");
+    // const html2pdf = await require("html2pdf.js");
     const element = document.getElementById("report");
     html2pdf(element, {
       margin: 2,

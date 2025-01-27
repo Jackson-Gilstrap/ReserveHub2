@@ -2,7 +2,8 @@
 import NavButton from "@/app/components/utility/button";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
+//@ts-ignore
+import html2pdf from 'html2pdf.js';
 interface ReservationProps {
   booking_ref: string;
   res_date: string;
@@ -22,7 +23,7 @@ const ConfirmationPage = () => {
   const { bookingRef } = params;
 
   const generatePdf = async () => {
-    const html2pdf = await require("html2pdf.js");
+    // const html2pdf = await require("html2pdf.js");
     const element = document.getElementById("confirmation");
     html2pdf(element, {
       margin: 20,

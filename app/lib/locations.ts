@@ -10,7 +10,7 @@ export type Location = {
 
 
 export function getLocations () {
-    return fetch("http://localhost:8080/api/locations/read").then((response: any) => {
+    return fetch("http://localhost:8080/api/locations/read").then((response) => {
         if(!response.ok) {
             throw new Error("Internal server error")
         }
@@ -24,7 +24,7 @@ export function getLocations () {
     })
 }
 export function getLocation (location_id: string) {
-    return fetch(`http://localhost:8080/api/locations/read/${location_id}`).then((response: any) => {
+    return fetch(`http://localhost:8080/api/locations/read/${location_id}`).then((response) => {
         if(!response.ok) {
             throw new Error("Internal server error")
         }

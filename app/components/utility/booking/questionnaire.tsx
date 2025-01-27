@@ -28,14 +28,12 @@ const Question: FC<QuestionProps> = ({ questionIdx, question }) => {
 
 const Questionnaire = () => {
   //functionality
-  const [questionList, setQuestionList] = useState(questions);
+  const [questionList] = useState(questions);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(
     questionList[currentQuestionIndex - 1].question
   );
   const [isDisabled, setIsDisabled] = useState(false);
-  const [isEligible, setIsEligible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -47,19 +45,19 @@ const Questionnaire = () => {
         setCurrentQuestion(questionList[currentQuestionIndex].question);
       } else {
         setIsDisabled(true);
-        setIsLoading(true);
+        
         //set routing for timeout in 1 seconds back to the booking page
         setTimeout(() => {
-          setIsLoading(false);
+          
           router.push("/booking");
         }, 1000);
       }
     } else {
-      setIsEligible(true);
+      
       setIsDisabled(true);
       //reroute after 1 seconds to next module.
       setTimeout(() => {
-        setIsLoading(false);
+        
         router.push("/booking/appointment");
       }, 1000);
     }

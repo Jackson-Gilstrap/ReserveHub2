@@ -11,6 +11,7 @@ export default function LocationList () {
     // save to state 
     // map through locations list
     // style
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleClick = (e:any) => {
         const location_id = e.target.id
         router.push(`/location/${location_id}`)

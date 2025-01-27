@@ -2,13 +2,9 @@
 import NavButton from "../components/utility/button";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useRole } from "../lib/context/roleContext";
-import { useRouter } from "next/navigation";
 
 
 const Dashboard = () => {
-  const {role} = useRole()
   const {data: session, status} = useSession()
 
   if(!session) {

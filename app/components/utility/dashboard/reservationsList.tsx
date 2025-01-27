@@ -11,7 +11,8 @@ export default function ReservationList() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = reservations.slice(indexOfFirstItem, indexOfLastItem);
-
+  
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = (e: any) => {
     console.log(e.target.id);
   };

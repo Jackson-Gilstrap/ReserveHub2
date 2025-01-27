@@ -8,7 +8,7 @@ import { useRole } from "@/app/lib/context/roleContext";
 export default function EditLocation() {
   const pathname = usePathname();
   const form_ref = useRef<HTMLFormElement>(null);
-  const { data: session, status } = useSession(); // Google auth user will evntually check emails against a db to see roles
+  const { data: session } = useSession(); // Google auth user will evntually check emails against a db to see roles
   const [location, setLocation] = useState<Location>();
   const {role} = useRole()
 
@@ -39,7 +39,7 @@ export default function EditLocation() {
       .catch((error) => {
         console.error("Failed to fetch locations:", error);
       });
-  }, []);
+  }, [location_id]);
 
   return (
     <form

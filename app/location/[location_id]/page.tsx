@@ -11,7 +11,7 @@ const LocationPage = () => {
   const pathname = usePathname();
   const parts = pathname.split("/");
   const location_id = parts[parts.length - 1];
-  const { data: session, status } = useSession(); // Google auth user will evntually check emails against a db to see roles
+  const { data: session } = useSession(); // Google auth user will evntually check emails against a db to see roles
   const {role} = useRole()
 
   if(!session) {
@@ -27,7 +27,7 @@ const LocationPage = () => {
       .catch((error) => {
         console.error("Failed to fetch locations:", error);
       });
-  }, []);
+  }, [location_id]);
   return (
     <>
       <NavButton

@@ -5,11 +5,7 @@ import { RoleProvider } from "./lib/context/roleContext";
 import { getServerSession } from "next-auth";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Reserve Hub v2",
-  description: "Reservation system for vita",
-};
-metadata.description;
+
 export default async function RootLayout({
   children,
 }: Readonly<{

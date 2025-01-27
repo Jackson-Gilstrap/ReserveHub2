@@ -10,8 +10,6 @@ export default function AppointmentForm() {
   const [locations, setLocations] = useState<Location[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment>();
-  const [error, setError] = useState<string>("")
-  const [loading, setLoading] = useState<boolean>(false);
   const form_ref = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
@@ -42,10 +40,7 @@ export default function AppointmentForm() {
     const newFormData = new FormData(form_ref.current!);
     const data = Object.fromEntries(newFormData.entries());
 
-    if(!data) {
-      setError("Please enter all required information information.")
-      return
-    }
+  
 
     const checkboxes = {
       file_jointly: form_ref.current!.file_jointly.checked || false,
@@ -57,7 +52,7 @@ export default function AppointmentForm() {
 
     console.log(final_data);
     try {
-      setLoading(true);
+      
       const response = await fetch(
         "http://localhost:8080/api/create-reservation",
         {
@@ -76,15 +71,15 @@ export default function AppointmentForm() {
       console.log(result);
 
       setTimeout(() => {
-        setLoading(false);
+        
         router.push(`/booking/${result.booking_ref}`);
       }, 3000);
     } catch (error: any) {
       console.log(error.message);
-      setLoading(false);
+      
     }
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   useEffect(() => {
     // Fetch appointments when component mounts
     getAppointments()
