@@ -10,7 +10,7 @@ export type Location = {
 
 
 export function getLocations () {
-    return fetch("http://localhost:8080/api/locations/read").then((response) => {
+    return fetch("http://http://reservehub3-1.eba-yd4q8y7m.us-east-1.elasticbeanstalk.com//api/locations/read").then((response) => {
         if(!response.ok) {
             throw new Error("Internal server error")
         }
