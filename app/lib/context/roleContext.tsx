@@ -22,7 +22,7 @@ export const RoleProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
       // Fetch the role and verify the email
-      fetch(`https://reservehub3-1.eba-yd4q8y7m.us-east-1.elasticbeanstalk.com/api/auth/read/${session.user.email}`)
+      fetch(`http://reservehub3-1.eba-yd4q8y7m.us-east-1.elasticbeanstalk.com/api/auth/read/${session.user.email}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Internal server error");
