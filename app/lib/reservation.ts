@@ -27,7 +27,7 @@ export interface DesciptiveReservation extends ModifiedReservation {
 
 
 export function getReservation(bookingRef: string) {
-  return fetch(`http://localhost:8080/api/reservations/read/bookingRef/${bookingRef}`).then(response => {
+  return fetch(`https://jacksongilstrap.site/api/reservations/read/bookingRef/${bookingRef}`).then(response => {
     if (!response.ok) {
       throw new Error("Internal Server Error");
     }
@@ -42,7 +42,7 @@ export function getReservation(bookingRef: string) {
 }
 
 export function deleteReservation(bookingRef: string) {
-  return fetch(`http://localhost:8080/api/reservations/delete/${bookingRef}`).then(response => {
+  return fetch(`https://jacksongilstrap.site/api/reservations/delete/${bookingRef}`).then(response => {
     if (!response.ok) {
       throw new Error("Internal Server Error");
     }
@@ -55,7 +55,7 @@ export function deleteReservation(bookingRef: string) {
   })
 }
 export function getReservations() {
-  return fetch("http://localhost:8080/api/reservations/read")
+  return fetch("https://jacksongilstrap.site/api/reservations/read")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Internal server error");
@@ -73,7 +73,7 @@ export function getReservations() {
 }
 
 export function getReservationByDate(date: string) {
-  return fetch(`http://localhost:8080/api/reservations/read/date/${date}`)
+  return fetch(`https://jacksongilstrap.site/api/reservations/read/date/${date}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Internal Server Error");
@@ -90,7 +90,7 @@ export function getReservationByDate(date: string) {
     });
 }
 export function getReservationByAppId(id: number) {
-  return fetch(`http://localhost:8080/api/reservations/read/id/${id}`)
+  return fetch(`https://jacksongilstrap.site/api/reservations/read/id/${id}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Internal Server Error");

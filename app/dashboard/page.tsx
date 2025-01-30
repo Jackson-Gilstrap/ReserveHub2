@@ -20,7 +20,7 @@ const Dashboard = () => {
     <>
       <div className=" px-4 py-6 mt-8 mx-6">
         <h2 className="text-xl font-semibold text-[#212529] text-center">
-         Admin Dashboard | Role: {userRole.toString()}
+         Admin Dashboard | Role: {userRole.role}
         </h2>
         <NavButton url="booking" text="Create reservation" disabled={status != "authenticated"} />
       </div>

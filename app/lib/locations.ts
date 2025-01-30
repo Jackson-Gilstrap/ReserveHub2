@@ -10,7 +10,7 @@ export type Location = {
 
 
 export function getLocations () {
-    return fetch("http://reservehub3-1.eba-yd4q8y7m.us-east-1.elasticbeanstalk.com/api/locations/read").then((response) => {
+    return fetch("https://jacksongilstrap.site/api/locations/read").then((response) => {
         if(!response.ok) {
             throw new Error("Internal server error")
         }
@@ -24,7 +24,7 @@ export function getLocations () {
     })
 }
 export function getLocation (location_id: string) {
-    return fetch(`http://localhost:8080/api/locations/read/${location_id}`).then((response) => {
+    return fetch(`https://jacksongilstrap.site/api/locations/read/${location_id}`).then((response) => {
         if(!response.ok) {
             throw new Error("Internal server error")
         }
@@ -41,7 +41,7 @@ export function getLocation (location_id: string) {
 //delete 
 
 export function deleteLocation(location_id: string) {
-    return fetch(`http://localhost:8080/api/locations/delete/${location_id}`).then(response => {
+    return fetch(`https://jacksongilstrap.site/api/locations/delete/${location_id}`).then(response => {
       if (!response.ok) {
         throw new Error("Internal Server Error");
       }
