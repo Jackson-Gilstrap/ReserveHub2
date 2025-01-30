@@ -27,7 +27,7 @@ export default function LocationList () {
         }).catch(error => {
             console.error("Failed to fetch locations:", error);
         })
-    },[locations])
+    },[])
     return (
         <section className=" p-6 max-w-2xl mx-auto">
             <span>Number of locations: {count}</span>
