@@ -12,10 +12,10 @@ export default function Home() {
 
 
   useEffect(() => {
-    if (session && status === "authenticated" && role.role) {
+    if (session && status === "authenticated" && role) {
       router.push("/dashboard");
     }
-  }, [session]);
+  }, [session, role]);
 
   return (
     <>
