@@ -15,7 +15,7 @@ export default function Home() {
     if (session && status === "authenticated" && role != undefined) {
       router.push("/dashboard");
     }
-  }, [session, role]);
+  }, [session]);
 
   return (
     <>
