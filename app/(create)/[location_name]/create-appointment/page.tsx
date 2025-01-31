@@ -38,6 +38,9 @@ export default function CreateAppointment () {
           },1500)
     
   }
+  if (!session) {
+    redirect("/");
+  }
 
   return (
     <form
