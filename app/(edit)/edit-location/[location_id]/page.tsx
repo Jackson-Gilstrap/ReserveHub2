@@ -16,11 +16,32 @@ export default function EditLocation() {
   const location_id = parts[parts.length - 1];
 
   //functions
-  const submitChangedLocationData = (e: FormEvent) => {
+  const submitChangedLocationData = async (e: FormEvent) => {
     e.preventDefault();
     const formdata = new FormData(form_ref.current!);
     const data = Object.fromEntries(formdata.entries());
-    console.log(data);
+    console.log(data); //make the api call
+
+    if(!session) {
+      //submit data to db and then redirect
+     const response = await fetch(`https://jacksongilstrap.site/api/locations/edit/${location_id}`, {
+      method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+     })
+
+     if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    setTimeout(()=> {
+      redirect('/dashboard')
+    },1500)
+};
+
+
   };
 
   const handleDelete = () => {

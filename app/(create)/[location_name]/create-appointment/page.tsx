@@ -21,7 +21,7 @@ export default function CreateAppointment () {
 
         if(!session) {
             //submit data to db and then redirect
-           const response = await fetch(`https://jacksongilstrap.site/api/create-appointment`, {
+           const response = await fetch(`https://jacksongilstrap.site/api/appointments/create`, {
             method: "POST",
               headers: {
                 "Content-Type": "application/json",
