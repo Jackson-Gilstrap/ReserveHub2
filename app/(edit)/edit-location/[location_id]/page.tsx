@@ -22,7 +22,7 @@ export default function EditLocation() {
     const data = Object.fromEntries(formdata.entries());
     console.log(data); //make the api call
 
-    if(!session) {
+    
       //submit data to db and then redirect
      const response = await fetch(`https://jacksongilstrap.site/api/locations/edit/${location_id}`, {
       method: "POST",
@@ -39,7 +39,7 @@ export default function EditLocation() {
     setTimeout(()=> {
       redirect('/dashboard')
     },1500)
-};
+
 
 
   };

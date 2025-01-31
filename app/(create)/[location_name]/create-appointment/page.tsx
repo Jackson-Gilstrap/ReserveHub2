@@ -19,7 +19,7 @@ export default function CreateAppointment () {
         const data = Object.fromEntries(formdata.entries());
         console.log(data)
 
-        if(!session) {
+        
             //submit data to db and then redirect
            const response = await fetch(`https://jacksongilstrap.site/api/appointments/create`, {
             method: "POST",
@@ -36,7 +36,7 @@ export default function CreateAppointment () {
           setTimeout(()=> {
             redirect('/dashboard')
           },1500)
-      };
+    
   }
 
   return (
