@@ -4,12 +4,15 @@ import NavButton from "./components/utility/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useRole } from "./lib/context/roleContext";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const role = useRole()
+
 
   useEffect(() => {
-    if (session && status === "authenticated") {
+    if (session && status === "authenticated" && role.role) {
       router.push("/dashboard");
     }
   }, [session]);
