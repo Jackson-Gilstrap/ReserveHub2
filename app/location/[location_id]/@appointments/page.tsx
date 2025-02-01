@@ -3,7 +3,7 @@
 import { Appointment, getAppointmentsByLocation } from "@/app/lib/appointments";
 import { useState, useEffect, useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { formatDate } from "@/app/components/utility/functions/datetime";
+import { formatDate,militaryToRegularTime } from "@/app/components/utility/functions/datetime";
 import { useRouter } from "next/navigation";
 
 interface fetchedDataProps {
@@ -116,8 +116,9 @@ export default function AppointmentsbyLocation() {
               <span className="text-[#6C757D] text-sm">
                 {formatDate(appointment.app_date)}
               </span>
+              <br/>
               <span className="text-[#6C757D] text-sm">
-                {appointment.app_time}
+                {militaryToRegularTime(appointment.app_time)}
               </span>
             </li>
           ))}
