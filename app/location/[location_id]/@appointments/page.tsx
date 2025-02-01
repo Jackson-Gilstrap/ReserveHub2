@@ -116,6 +116,9 @@ export default function AppointmentsbyLocation() {
               <span className="text-[#6C757D] text-sm">
                 {formatDate(appointment.app_date)}
               </span>
+              <span className="text-[#6C757D] text-sm">
+                {appointment.app_time}
+              </span>
             </li>
           ))}
         </ul>
