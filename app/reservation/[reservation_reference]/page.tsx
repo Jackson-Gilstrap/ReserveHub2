@@ -1,5 +1,6 @@
 'use client';
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
 import { useState, useEffect } from "react";
 import { Reservation, getReservation, deleteReservation } from "@/app/lib/reservation";
 
@@ -8,12 +9,14 @@ import NavButton from "@/app/components/utility/button";
 
 const ReservationPage = () => {
     const pathname = usePathname();
+    const router = useRouter()
     const parts = pathname.split("/");
     const booking_ref = parts[parts.length - 1];
     const [reservation, setReservation] = useState<Reservation>()
     
     const handleDelete = () => {
         deleteReservation(booking_ref)
+        router.push('/dashboard')
     }
 
 
