@@ -30,15 +30,19 @@ export const RoleProvider = ({ children }: { children: ReactNode }) => {
           return response.json();
         })
         .then((data) => {
-          const { verified_email, user_role } = data.body;
+          console.log( 'data object ',data.body)
+          if(data.body != undefined) {
+            const { verified_email, user_role } = data.body;
+  
+            // Check if the user's email is verified
+            if (session.user?.email === verified_email) {
+              setRole(user_role); // Set the role in context
+            }
 
-          // Check if the user's email is verified
-          if (session.user?.email === verified_email) {
-            setRole(user_role); // Set the role in context
           }
         })
         .catch((error) => {
-          console.error("Error fetching role or verifying email:", error);
+          console.error("Error fetching role or not a verified email:", error);
         });
     }
   }, [session, status]);
