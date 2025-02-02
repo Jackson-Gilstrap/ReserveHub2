@@ -41,7 +41,12 @@ export function getLocation (location_id: string) {
 //delete 
 
 export function deleteLocation(location_id: string) {
-    return fetch(`https://jacksongilstrap.site/api/locations/delete/${location_id}`).then(response => {
+    return fetch(`https://jacksongilstrap.site/api/locations/delete/${location_id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
       if (!response.ok) {
         throw new Error("Internal Server Error");
       }

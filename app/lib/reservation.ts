@@ -6,7 +6,7 @@ export interface Reservation {
   booking_ref: string;
   file_jointly: boolean;
   for_dependent: boolean;
-  is_tce:boolean;
+  is_tce: boolean;
   client_id: string;
 }
 
@@ -25,34 +25,49 @@ export interface DesciptiveReservation extends ModifiedReservation {
   is_tce: boolean;
 }
 
-
 export function getReservation(bookingRef: string) {
-  return fetch(`https://jacksongilstrap.site/api/reservations/read/bookingRef/${bookingRef}`).then(response => {
-    if (!response.ok) {
-      throw new Error("Internal Server Error");
-    }
+  return fetch(
+    `https://jacksongilstrap.site/api/reservations/read/bookingRef/${bookingRef}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Internal Server Error");
+      }
 
-    return response.json();
-  }).then(data => {
-    return data.body
-  }).catch(error => {
-    console.log(error);
-    return error
-  })
+      return response.json();
+    })
+    .then((data) => {
+      return data.body;
+    })
+    .catch((error) => {
+      console.log(error);
+      return error;
+    });
 }
 
 export function deleteReservation(bookingRef: string) {
-  return fetch(`https://jacksongilstrap.site/api/reservations/delete/${bookingRef}`).then(response => {
-    if (!response.ok) {
-      throw new Error("Internal Server Error");
+  return fetch(
+    `https://jacksongilstrap.site/api/reservations/delete/${bookingRef}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
-    return response.json()
-  }).then(data => {
-    return data.body
-  }).catch(error=> {
-    console.log(error);
-    return error
-  })
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Internal Server Error");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data.body;
+    })
+    .catch((error) => {
+      console.log(error);
+      return error;
+    });
 }
 export function getReservations() {
   return fetch("https://jacksongilstrap.site/api/reservations/read")
@@ -73,7 +88,9 @@ export function getReservations() {
 }
 
 export function getReservationByDate(date: string) {
-  return fetch(`https://jacksongilstrap.site/api/reservations/read/date/${date}`)
+  return fetch(
+    `https://jacksongilstrap.site/api/reservations/read/date/${date}`
+  )
     .then((response) => {
       if (!response.ok) {
         throw new Error("Internal Server Error");
