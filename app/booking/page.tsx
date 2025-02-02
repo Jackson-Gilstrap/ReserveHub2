@@ -1,8 +1,6 @@
-import BookingModule from "../components/utility/booking/bookingModules";
 const BookingPage = () => {
     return (
         <div className="px-6 py-10">
-          {/* Gradient Title Section */}
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow-md p-6 text-center">
             <h1 className="text-4xl font-extrabold tracking-wide">Booking Process</h1>
             <p className="text-lg mt-2 opacity-90">
@@ -10,7 +8,7 @@ const BookingPage = () => {
             </p>
           </div>
     
-          {/* Booking Module */}
+         
           <div className="mt-10 flex justify-center">
             <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl border border-gray-200">
               <h2 className="text-2xl font-bold text-gray-800">Questionnaire</h2>
@@ -26,7 +24,6 @@ const BookingPage = () => {
             </div>
           </div>
     
-          {/* Reminder Section */}
           <section className="mt-12 text-center bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold">Reminder:</h2>
             <p className="text-lg mt-2">

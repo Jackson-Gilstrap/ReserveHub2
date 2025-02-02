@@ -5,7 +5,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 function AuthButton() {
   const { data: session, status } = useSession();
   console.log("client session", session);
-  const imgSrc = session?.user?.image;
 
   if (status === "loading") {
     return "Loading...";
