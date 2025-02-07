@@ -24,7 +24,7 @@ export default function EditLocation() {
 
     
       //submit data to db and then redirect
-     const response = await fetch(`https://jacksongilstrap.site/api/locations/edit/${location_id}`, {
+     const response = await fetch(`https://jacksongilstrap.codes/api/locations/edit/${location_id}`, {
       method: "POST",
         headers: {
           "Content-Type": "application/json",

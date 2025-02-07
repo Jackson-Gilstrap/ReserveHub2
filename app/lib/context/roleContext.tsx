@@ -22,7 +22,7 @@ export const RoleProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
       // Fetch the role and verify the email
-      fetch(`https://jacksongilstrap.site/api/auth/read/${session.user.email}`)
+      fetch(`https://jacksongilstrap.codes/api/auth/read/${session.user.email}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Internal server error");

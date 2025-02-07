@@ -35,7 +35,7 @@ const ConfirmationPage = () => {
     setLoading(true);
     setTimeout(() => {
       if (bookingRef) {
-        fetch(`https://jacksongilstrap.site/api/reservations/read/bookingRef/${bookingRef}`)
+        fetch(`https://jacksongilstrap.codes/api/reservations/read/bookingRef/${bookingRef}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Internal server error");

@@ -49,7 +49,7 @@ export default function AppointmentForm() {
     console.log(selectedAppointment);
     try {
       const response = await fetch(
-        "https://jacksongilstrap.site/api/reservations/create",
+        "https://jacksongilstrap.codes/api/reservations/create",
         {
           method: "POST",
           headers: {
