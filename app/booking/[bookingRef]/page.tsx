@@ -13,6 +13,7 @@ interface ReservationProps {
   created_at: string;
   file_jointly: boolean;
   for_dependent: boolean;
+  joint_filer?: string;
 }
 const ConfirmationPage = () => {
   const params = useParams() as { bookingRef: string };
@@ -101,6 +102,9 @@ const ConfirmationPage = () => {
               <span className="font-medium text-gray-600">File Jointly:</span>{" "}
               {reservationDetails?.file_jointly ? "Yes" : "No"}
             </p>
+            {reservationDetails?.joint_filer && (
+              <p>{reservationDetails.joint_filer}</p>
+            )}
             <p>
               <span className="font-medium text-gray-600">For Dependent:</span>{" "}
               {reservationDetails?.for_dependent ? "Yes" : "No"}

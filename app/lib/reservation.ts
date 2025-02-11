@@ -8,6 +8,7 @@ export interface Reservation {
   for_dependent: boolean;
   is_tce: boolean;
   client_id: string;
+  
 }
 
 export interface ModifiedReservation {
