@@ -69,26 +69,26 @@ export default function AppointmentForm() {
     console.log(final_data);
     console.log(selectedAppointment);
     try {
-      // const response = await fetch(
-      //   "https://jacksongilstrap.codes/api/reservations/create",
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({ final_data, selectedAppointment }),
-      //   }
-      // );
+      const response = await fetch(
+        "https://jacksongilstrap.codes/api/reservations/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ final_data, selectedAppointment }),
+        }
+      );
 
-      // if (!response.ok) {
-      //   throw new Error(response.statusText);
-      // }
-      // const result = await response.json();
-      // console.log(result);
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const result = await response.json();
+      console.log(result);
 
-      // setTimeout(() => {
-      //   router.push(`/booking/${result.booking_ref}`);
-      // }, 3000);
+      setTimeout(() => {
+        router.push(`/booking/${result.booking_ref}`);
+      }, 3000);
     } catch (error) {
       console.log(error);
     }

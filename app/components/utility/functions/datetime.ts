@@ -20,7 +20,10 @@ export const formattedISOnoTime = (dateString: string) => {
   return `${weekday}, ${fullDate}`;
 };
 
-
+export const formatDate = (date: string) => {
+    const tempArr = date.split("T");
+    return tempArr[0];
+  };
 
 
  export  function militaryToRegularTime(militaryTime: string) {
