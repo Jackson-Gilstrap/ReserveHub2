@@ -6,20 +6,17 @@ import {
   getReservationByDate,
 } from "@/app/lib/reservation";
 //@ts-expect-error this error is because html2pdf doesn't have type file modules
-import html2pdf from 'html2pdf.js'
+import html2pdf from "html2pdf.js";
 
 export default function DailyReports() {
   const [reservations, setReservations] = useState<ModifiedReservation[]>([]);
+  const uniqueTimes = [...new Set(reservations.map((reservation) => reservation.res_time))];
   const [date, setDate] = useState<Date>(new Date());
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 7;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = reservations.slice(indexOfFirstItem, indexOfLastItem);
+  const [desiredTime, setDesiredTime] = useState(uniqueTimes[0]);
+  const filteredReservations = reservations.filter((res) => res.res_time === desiredTime);
   const pdfWidth = 297; // A4 width in mm (landscape: 297)
   const pdfHeight = 297;
   const generatePdf = async () => {
-    // const html2pdf = await require("html2pdf.js");
     const element = document.getElementById("report");
     html2pdf(element, {
       margin: 2,
@@ -36,18 +33,6 @@ export default function DailyReports() {
       filename: `VITA Daily Reservation Report`,
       pagebreak: { mode: ["auto"] },
     });
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < Math.ceil(reservations.length / itemsPerPage)) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
   };
 
 
@@ -67,6 +52,14 @@ export default function DailyReports() {
       );
     }
   }, [date]);
+
+  useEffect(() => {
+    if (!uniqueTimes.includes(desiredTime)) {
+      setDesiredTime(uniqueTimes[0]);
+    }
+  }, [reservations])
+
+  
   return (
     <section
       className="mx-auto max-w-6xl max-h-max bg-[#FDFDFD] p-6 rounded-lg border border-[#E0E0E0] shadow-md"
@@ -99,30 +92,22 @@ export default function DailyReports() {
           data-html2canvas-ignore
         />
       </div>
-      <div className="mt-6 flex justify-between items-center">
-        <button
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-          className="bg-[#4A90E2] text-white px-4 py-2 rounded-md transition duration-300 hover:bg-[#357ABD] disabled:bg-[#E0E0E0] disabled:text-[#6C757D] disabled:cursor-not-allowed"
-          data-html2canvas-ignore
-        >
-          Previous
-        </button>
-        <button
-          onClick={handleNextPage}
-          disabled={
-            currentPage === Math.ceil(reservations.length / itemsPerPage)
-          }
-          className="bg-[#4A90E2] text-white px-4 py-2 rounded-md transition duration-300 hover:bg-[#357ABD] disabled:bg-[#E0E0E0] disabled:text-[#6C757D] disabled:cursor-not-allowed"
-          data-html2canvas-ignore
-        >
-          Next
-        </button>
+      <div>
+        <ul className="flex gap-4" data-html2canvas-ignore>
+        {uniqueTimes.map((time, index) => (
+          <li
+            key={index}
+            onClick={() => setDesiredTime(time)}
+            className={`cursor-pointer px-3 py-1 rounded-md ${
+              desiredTime === time ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            {time}
+          </li>
+        ))}
+      </ul>
       </div>
-      <p className="text-[#6C757D] text-sm text-center mt-4">
-        Page {currentPage} of {Math.ceil(reservations.length / itemsPerPage)}
-      </p>
-
+    
       <table className="w-full border-collapse bg-[#FDFDFD] border border-[#E0E0E0] rounded-lg shadow-md text-[#212529]">
         <thead className="bg-[#F8F9FA]">
           <tr>
@@ -143,7 +128,7 @@ export default function DailyReports() {
             <th className="p-4 text-left border-b border-[#E0E0E0]">File</th>
           </tr>
         </thead>
-        {currentItems.length < 1 ? (
+        {reservations.length < 1 ? (
           <tbody>
             <tr className="hover:bg-[#F8F9FA] transition duration-200">
               <td className="p-4 border-b border-[#E0E0E0]">
@@ -153,7 +138,7 @@ export default function DailyReports() {
           </tbody>
         ) : (
           <tbody>
-            {currentItems.map((reservation) => (
+            {filteredReservations.map((reservation) => (
               <tr
                 key={reservation.booking_ref}
                 className="hover:bg-[#F8F9FA] transition duration-200"
@@ -191,7 +176,6 @@ export default function DailyReports() {
                     className="textarea-like whitespace-pre-wrap break-words w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1"
                   ></div>{" "}
                 </td>
-            
               </tr>
             ))}
           </tbody>
@@ -201,5 +185,3 @@ export default function DailyReports() {
   );
 }
 
-// we need to pull reservations from the db that include the date but we need to query
-// sort the reservations that come through by time from earliest to lastest preferalbly put them in groups // each location doesn't overlap days execpt the march 7th

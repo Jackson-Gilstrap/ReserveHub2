@@ -2,22 +2,44 @@ import { useEffect, useState, useMemo, useRef, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Appointment, getAppointments } from "@/app/lib/appointments";
 import { Location, getLocations } from "@/app/lib/locations";
-import { formattedISOnoTime} from "../functions/datetime";
+import { formattedISOnoTime } from "../functions/datetime";
 
 // create a quick button selection for filing single or jointly
 export default function AppointmentForm() {
   const [date, setDate] = useState<string>("");
-  const [file_jointly_switch, setFileJointly] = useState<boolean>();
+  const [file_jointly_switch, setFileJointly] = useState<boolean>(false);
   const [location, setLocation] = useState<string>("");
   const [locations, setLocations] = useState<Location[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment>();
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false)
+  const phoneNumberRef = useRef<HTMLInputElement>(null);
   const form_ref = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
   const handleSelection = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     console.log(selectedAppointment);
+  };
+
+  const handlePhoneNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    e.target.value = formatted; // 
+  };
+
+  const formatPhoneNumber = (value: string) => {
+    const numbersOnly = value.replace(/\D/g, ""); 
+    if (numbersOnly.length <= 3) {
+      return numbersOnly;
+    } else if (numbersOnly.length <= 6) {
+      return `${numbersOnly.slice(0, 3)}-${numbersOnly.slice(3)}`;
+    } else {
+      return `${numbersOnly.slice(0, 3)}-${numbersOnly.slice(
+        3,
+        6
+      )}-${numbersOnly.slice(6, 10)}`;
+    }
   };
 
   const handleJointSelection = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,11 +63,8 @@ export default function AppointmentForm() {
 
       if (matchesDate && matchesLocation) {
         filtered.push(appointment);
-        console.log("not formatted: ", appointment.app_date)
-        console.log(appointment.app_date === formattedISOnoTime(date))
-        
-        // console.log(formatDate(appointment.app_date) === formattedISOnoTime(date))
-      
+        console.log("not formatted: ", appointment.app_date);
+        console.log(appointment.app_date === formattedISOnoTime(date));
       }
 
       return filtered;
@@ -54,6 +73,9 @@ export default function AppointmentForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    setLoading(true)
+    setError("")
 
     const newFormData = new FormData(form_ref.current!);
     const data = Object.fromEntries(newFormData.entries());
@@ -89,8 +111,21 @@ export default function AppointmentForm() {
       setTimeout(() => {
         router.push(`/booking/${result.booking_ref}`);
       }, 3000);
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log(error);
+      let errorMessage = "An unexpected error occurred. Please try again.";
+
+      if (error.name === "TypeError") {
+        errorMessage =
+          "Network error: Unable to connect to the server. Please check your internet connection.";
+      } else if (error.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+      setError(errorMessage);
+    } finally {
+      setLoading(false)
+      
     }
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -122,7 +157,6 @@ export default function AppointmentForm() {
         console.error(error);
       });
   }, []);
-  // console.log(date)
   return (
     <>
       <div className="px-6 py-8">
@@ -150,6 +184,20 @@ export default function AppointmentForm() {
           </div>
         </div>
 
+        {file_jointly_switch ? (
+          <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 mt-8 p-4 rounded-md shadow-md">
+            <span className="font-medium">
+              You are making a reservation for a <strong>joint return</strong>
+            </span>
+          </div>
+        ) : (
+          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 mt-8 p-4 rounded-md shadow-md">
+            <span className="font-medium">
+              You are making a reservation for a <strong>single return</strong>
+            </span>
+          </div>
+        )}
+
         <form
           ref={form_ref}
           onSubmit={handleSubmit}
@@ -168,7 +216,7 @@ export default function AppointmentForm() {
                     { label: "First Name", name: "f_name", type: "text" },
                     { label: "Last Name", name: "l_name", type: "text" },
                     {
-                      label: "Phone Number",
+                      label: "Phone Number (Primary)",
                       name: "phone_number",
                       type: "tel",
                       placeholder: "i.e. 111-111-111",
@@ -203,6 +251,12 @@ export default function AppointmentForm() {
                           : {})}
                         {...(input.minLength
                           ? { minLength: input.minLength }
+                          : {})}
+                        {...(input.name === "phone_number"
+                          ? { onChange: handlePhoneNumChange }
+                          : {})}
+                        {...(input.name === "phone_number"
+                          ? { ref: phoneNumberRef }
                           : {})}
                         required
                       />
@@ -251,7 +305,7 @@ export default function AppointmentForm() {
                     { label: "First Name", name: "f_name", type: "text" },
                     { label: "Last Name", name: "l_name", type: "text" },
                     {
-                      label: "Phone Number",
+                      label: "Phone Number (Primary)",
                       name: "phone_number",
                       type: "tel",
                       placeholder: "i.e. 111-111-111",
@@ -286,6 +340,12 @@ export default function AppointmentForm() {
                           : {})}
                         {...(input.minLength
                           ? { minLength: input.minLength }
+                          : {})}
+                        {...(input.name === "phone_number"
+                          ? { onChange: handlePhoneNumChange }
+                          : {})}
+                        {...(input.name === "phone_number"
+                          ? { ref: phoneNumberRef }
                           : {})}
                         required
                       />
@@ -433,11 +493,22 @@ export default function AppointmentForm() {
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-blue-500 text-white hover:bg-blue-600"
               }`}
-            >
-              Reserve Appointment
+            >{loading ? (
+              <span className="flex items-center">
+                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="white" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="white" d="M4 12a8 8 0 018-8V0a12 12 0 00-12 12h4z"></path>
+                </svg>
+                Processing...
+              </span>
+            ) : (
+              "Make Reservation"
+            )}
             </button>
           </div>
         </form>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+
       </div>
     </>
   );
