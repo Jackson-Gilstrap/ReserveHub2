@@ -3,7 +3,6 @@ import { formatDate } from "@/app/components/utility/functions/datetime";
 import { useState, useEffect } from "react";
 import {
   DesciptiveReservation,
-  ModifiedReservation,
   getReservationByDate,
 } from "@/app/lib/reservation";
 //@ts-expect-error this error is because html2pdf doesn't have type file modules
