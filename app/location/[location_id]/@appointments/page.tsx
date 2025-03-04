@@ -120,6 +120,8 @@ export default function AppointmentsbyLocation() {
               <span className="text-[#6C757D] text-sm">
                 {militaryToRegularTime(appointment.app_time)}
               </span>
+              <br/>
+              <span className="text-[#6C757D] text-sm">Slots: {appointment.cur_slots}/{appointment.max_slots}</span>
             </li>
           ))}
         </ul>

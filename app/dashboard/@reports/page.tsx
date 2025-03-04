@@ -2,6 +2,7 @@
 import { formatDate } from "@/app/components/utility/functions/datetime";
 import { useState, useEffect } from "react";
 import {
+  DesciptiveReservation,
   ModifiedReservation,
   getReservationByDate,
 } from "@/app/lib/reservation";
@@ -9,11 +10,15 @@ import {
 import html2pdf from "html2pdf.js";
 
 export default function DailyReports() {
-  const [reservations, setReservations] = useState<ModifiedReservation[]>([]);
-  const uniqueTimes = [...new Set(reservations.map((reservation) => reservation.res_time))];
+  const [reservations, setReservations] = useState<DesciptiveReservation[]>([]);
+  const uniqueTimes = [
+    ...new Set(reservations.map((reservation) => reservation.res_time)),
+  ];
   const [date, setDate] = useState<Date>(new Date());
   const [desiredTime, setDesiredTime] = useState(uniqueTimes[0]);
-  const filteredReservations = reservations.filter((res) => res.res_time === desiredTime);
+  const filteredReservations = reservations.filter(
+    (res) => res.res_time === desiredTime
+  );
   const pdfWidth = 297; // A4 width in mm (landscape: 297)
   const pdfHeight = 297;
   const generatePdf = async () => {
@@ -35,13 +40,13 @@ export default function DailyReports() {
     });
   };
 
-
   useEffect(() => {
     if (date) {
       getReservationByDate(formatDate(date.toISOString())).then(
         (fetchedReservations) => {
           if (Array.isArray(fetchedReservations)) {
             setReservations(fetchedReservations);
+            console.log(fetchedReservations)
           } else {
             console.error(
               "Invalid reservation query data:",
@@ -57,9 +62,8 @@ export default function DailyReports() {
     if (!uniqueTimes.includes(desiredTime)) {
       setDesiredTime(uniqueTimes[0]);
     }
-  }, [reservations])
+  }, [reservations]);
 
-  
   return (
     <section
       className="mx-auto max-w-6xl max-h-max bg-[#FDFDFD] p-6 rounded-lg border border-[#E0E0E0] shadow-md"
@@ -94,20 +98,20 @@ export default function DailyReports() {
       </div>
       <div>
         <ul className="flex gap-4" data-html2canvas-ignore>
-        {uniqueTimes.map((time, index) => (
-          <li
-            key={index}
-            onClick={() => setDesiredTime(time)}
-            className={`cursor-pointer px-3 py-1 rounded-md ${
-              desiredTime === time ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-          >
-            {time}
-          </li>
-        ))}
-      </ul>
+          {uniqueTimes.map((time, index) => (
+            <li
+              key={index}
+              onClick={() => setDesiredTime(time)}
+              className={`cursor-pointer px-3 py-1 rounded-md ${
+                desiredTime === time ? "bg-blue-500 text-white" : "bg-gray-200"
+              }`}
+            >
+              {time}
+            </li>
+          ))}
+        </ul>
       </div>
-    
+
       <table className="w-full border-collapse bg-[#FDFDFD] border border-[#E0E0E0] rounded-lg shadow-md text-[#212529]">
         <thead className="bg-[#F8F9FA]">
           <tr>
@@ -148,15 +152,21 @@ export default function DailyReports() {
                 </td>
                 <td className="p-4 border-b border-[#E0E0E0]">
                   {reservation.client_given_name} {reservation.client_surname}
+                  <br /> &#40;{reservation.booking_ref}&#41;
                 </td>
                 <td className="p-4 border-b border-[#E0E0E0]">
                   {reservation.client_phone_number}
                 </td>
                 <td className="p-4 border-b border-[#E0E0E0]">
-                  <div
-                    contentEditable={true}
-                    className="textarea-like whitespace-pre-wrap break-words w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1"
-                  ></div>{" "}
+                    <ul className=" list-disc pl-4">
+                      {reservation.has_w2 === true  && <li>W2</li>}
+                      {reservation.has_1099NEC && <li>1099-NEC</li>}
+                      {reservation.has_1099MISC && <li>1099-MISC</li>}
+                      {reservation.has_w2_os && <li>W2&#40;Out of state&#41;</li>}
+                      {reservation.multi_year && <li>Multi-Year Filing</li>}
+                    </ul>
+                  {/* <div className="textarea-like whitespace-pre-wrap break-words w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1">
+                  </div>{" "} */}
                 </td>
                 <td className="p-4 border-b border-[#E0E0E0]">
                   <div
@@ -184,4 +194,3 @@ export default function DailyReports() {
     </section>
   );
 }
-

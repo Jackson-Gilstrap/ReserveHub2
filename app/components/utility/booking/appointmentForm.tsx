@@ -61,7 +61,7 @@ export default function AppointmentForm() {
         ? appointment.app_location === location
         : true;
 
-      if (matchesDate && matchesLocation) {
+      if (matchesDate && matchesLocation && appointment.app_status !== 0) {
         filtered.push(appointment);
         console.log("not formatted: ", appointment.app_date);
         console.log(appointment.app_date === formattedISOnoTime(date));
@@ -84,7 +84,13 @@ export default function AppointmentForm() {
       file_jointly: file_jointly_switch,
       has_dependent: form_ref.current!.has_dependent.checked || false,
       is_tce: form_ref.current!.is_tce.checked || false,
-    };
+      has_w2: form_ref.current!.has_w2.checked || false,
+      has_1099NEC: form_ref.current!.has_1099NEC.checked || false,
+      has_1099MISC: form_ref.current!.has_1099MISC.checked || false,
+      has_w2_os: form_ref.current!.has_w2_os.checked || false,
+      multi_year: form_ref.current!.multi_year.checked || false,
+    }
+  
 
     const final_data = { ...data, ...checkboxes };
 
@@ -413,7 +419,7 @@ export default function AppointmentForm() {
                   <div
                     key={appointment.app_id}
                     onClick={() => handleSelection(appointment)}
-                    className={`p-4 rounded-md text-center cursor-pointer transition-all duration-300 ${
+                    className={`p-4 rounded-md text-center transition-all duration-300 ${
                       appointment.app_status === 0
                         ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                         : selectedAppointment?.app_id === appointment.app_id
@@ -424,6 +430,7 @@ export default function AppointmentForm() {
                     <h4 className="font-bold">{appointment.app_title}</h4>
                     <p>{`${appointment.app_date} at ${appointment.app_time}`}</p>
                     <p>{appointment.app_location}</p>
+                    <p>{appointment.cur_slots}/{appointment.max_slots}</p>
                   </div>
                 ))}
               </div>
@@ -454,11 +461,11 @@ export default function AppointmentForm() {
 
           <section className="border border-gray-300 bg-gray-50 rounded-lg p-6 mt-8">
             <h3 className="text-lg font-semibold text-gray-800 text-center">
-              Other Information
+              Check All That Apply
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="flex items-center">
+              <div className="flex items-center flex-start">
                 <input
                   type="checkbox"
                   name="has_dependent"
@@ -470,15 +477,70 @@ export default function AppointmentForm() {
                 </label>
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center flex-start">
                 <input
                   type="checkbox"
                   name="is_tce"
                   id="is_tce"
                   className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <label htmlFor="is_tce" className="ml-2 text-gray-800">
+                <label htmlFor="has_w2" className="ml-2 text-gray-800 ">
                   Are you 60 yrs old as of December 31st, 2024?
+                </label>
+              </div>
+              <div className="flex items-center flex-start">
+                <input
+                  type="checkbox"
+                  name="has_w2"
+                  id="has_w2"
+                  className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label htmlFor="has_w2" className="ml-2 text-gray-800">
+                  Do you have a W2?
+                </label>
+              </div>
+              <div className="flex items-center flex-start">
+                <input
+                  type="checkbox"
+                  name="has_1099NEC"
+                  id="has_1099NEC"
+                  className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label htmlFor="has_1099NEC" className="ml-2 text-gray-800">
+                  Do you have a 1099NEC?
+                </label>
+              </div>
+              <div className="flex items-center flex-start">
+                <input
+                  type="checkbox"
+                  name="has_1099MISC"
+                  id="has_1099MISC"
+                  className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label htmlFor="has_1099MISC" className="ml-2 text-gray-800">
+                  Do you have a 1099MISC?
+                </label>
+              </div>
+              <div className="flex items-center flex-start">
+                <input
+                  type="checkbox"
+                  name="has_w2_os"
+                  id="has_w2_os"
+                  className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label htmlFor="has_w2_os" className="ml-2 text-gray-800">
+                  Do you have a W2 &#40;out of state&#41;?
+                </label>
+              </div>
+              <div className="flex items-center flex-start">
+                <input
+                  type="checkbox"
+                  name="multi_year"
+                  id="multi_year"
+                  className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label htmlFor="multi_year" className="ml-2 text-gray-800">
+                  Will you be filing for any other years i.e. 2022, 2023?
                 </label>
               </div>
             </div>

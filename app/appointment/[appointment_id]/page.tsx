@@ -61,7 +61,7 @@ const AppointmentPage = () => {
                 className="flex justify-between items-center cursor-pointer text-[#212529] font-semibold hover:text-[#4A90E2] transition"
                 onClick={() => toggleDropdown(index)}
               >
-                <span>{`${reservation.client_given_name} ${reservation.client_surname}`}</span>
+                <span>{`${reservation.client_given_name} ${reservation.client_surname}`}{" "}&#40;{reservation.booking_ref}&#41;</span>
                 <span className="text-sm text-[#6C757D]">
                   {activeIndex === index ? "▲ Hide Details" : "▼ Show Details"}
                 </span>

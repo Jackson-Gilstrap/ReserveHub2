@@ -6,8 +6,8 @@ export type Appointment = {
   app_type: string;
   app_location: string;
   app_status: number;
-  cur_slot: number;
-  max_slot: number;
+  cur_slots: number;
+  max_slots: number;
 };
 
 //get appointments

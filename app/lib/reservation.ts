@@ -24,6 +24,11 @@ export interface DesciptiveReservation extends ModifiedReservation {
   file_jointly: boolean;
   for_dependent: boolean;
   is_tce: boolean;
+  has_w2:boolean;
+  has_1099NEC: boolean;
+  has_1099MISC: boolean;
+  has_w2_os: boolean;
+  multi_year: boolean;
 }
 
 export function getReservation(bookingRef: string) {
